@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.burberry.customer</groupId>
+	<artifactId>HiveCustomerTest</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>HiveCustomerTest</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<hadoop-mr1.version>2.5.0-mr1-cdh5.2.0-SNAPSHOT</hadoop-mr1.version>
+		<hadoop.version>2.5.0-cdh5.2.0-SNAPSHOT</hadoop.version>
+		<spark.version>1.2.1</spark.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<commons-logging.version>1.0.4</commons-logging.version>
+		<thrift.version>0.9.0</thrift.version>
+		<minJavaVersion>1.7</minJavaVersion>
+		<maxJavaVersion>1.8</maxJavaVersion>
+		<sourceJavaVersion>1.7</sourceJavaVersion>
+		<targetJavaVersion>1.7</targetJavaVersion>
+		<mrunit.version>1.0.0</mrunit.version>
+	</properties>
+
+	<dependencies>
+		<!-- dependency> <groupId>org.apache.hadoop</groupId> <artifactId>hadoop-client</artifactId> 
+			<version>${hadoop.version}</version> </dependency -->
+
+		<!--dependency> <groupId>com.klarna.hadoop</groupId> <artifactId>hadoop-hiveunit</artifactId> 
+			<version>0.5-SNAPSHOT</version> <scope>test</scope> </dependency -->
+
+		<dependency>
+			<groupId>com.klarna</groupId>
+			<artifactId>hiverunner</artifactId>
+			<version>0.9.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<!-- forkMode:always resolves OOM error when running unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<forkCount>1C</forkCount>
+					<reuseForks>true</reuseForks>
+					<argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
