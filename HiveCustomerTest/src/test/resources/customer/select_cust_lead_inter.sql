@@ -1,0 +1,7 @@
+SELECT * FROM (
+ SELECT *
+ FROM cust
+ UNION ALL
+ SELECT *
+ FROM lead
+) CUST_LEAD_INTER
