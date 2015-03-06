@@ -37,14 +37,18 @@ public class CustomerTest {
 	@HiveResource(targetFile = "${hiveconf:MY.HDFS.DIR}/hana_user/data_from_file.csv")
 	private File dataFromHanaUser = new File(ClassLoader.getSystemResource(
 			"customer/hana_user_data.csv").getPath());
-
+	
+	@HiveResource(targetFile = "${hiveconf:MY.HDFS.DIR}/bronze/data_from_file.csv")
+	private File dataFromBronze = new File(ClassLoader.getSystemResource(
+			"customer/bronze.csv").getPath());
+	
 	@HiveSQL(files = { "customer/create_table.sql" }, encoding = "UTF-8")
 	private HiveShell hiveShell;
 
 	@Test
 	public void testTablesCreated() {
 		List<String> expected = Arrays.asList("cust", "hana_customer",
-				"hana_user");
+				"hana_user", "lead", "cust_lead_inter", "cust_lead", "bronze");
 		List<String> actual = hiveShell.executeQuery("show tables");
 		Collections.sort(expected);
 		Collections.sort(actual);
@@ -57,14 +61,16 @@ public class CustomerTest {
 		File select_cust = new File(ClassLoader.getSystemResource(
 				"customer/select_cust.sql").getPath());
 		String select = new Scanner(select_cust).useDelimiter("\\Z").next();
-		String query = "SELECT hana_customer.firstname, hana_customer.lastname FROM hana_customer left outer join hana_user on (hana_customer.lastmodifiedbyid = hana_user.id)";
+		//String query = "SELECT hana_customer.firstname, hana_customer.lastname FROM hana_customer left outer join hana_user on (hana_customer.lastmodifiedbyid = hana_user.id)";
 		List<String> actual = hiveShell.executeQuery(select);
+		
 		File outputFile = new File(ClassLoader.getSystemResource(
 				"customer/output.csv").getPath());
 		String output = new Scanner(outputFile).useDelimiter("\\Z").next();
 		output = output.replace(',', '\t');
 		String lines[] = output.split("\\r?\\n");
 		List<String> expected = Arrays.asList(lines);
+		
 		Assert.assertEquals(expected, actual);
 		Assert.assertTrue(actual.containsAll(expected));
 	}

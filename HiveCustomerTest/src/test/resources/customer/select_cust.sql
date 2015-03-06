@@ -57,5 +57,6 @@ SELECT hc.imp_parent_cust_vc,
        hu1.name
 FROM hana_customer hc
 JOIN hana_customer hc1 ON (hc.id = hc1.imp_parent_cust_vc)
+JOIN bronze b ON ( b.parent_sf_id=hc1.imp_parent_cust_vc)
 LEFT OUTER JOIN hana_user hu ON (hc.createdbyid = hu.id)
-LEFT OUTER JOIN hana_user hu1 ON (hc.lastmodifiedbyid = hu1.id) LIMIT 10
+LEFT OUTER JOIN hana_user hu1 ON (hc.lastmodifiedbyid = hu1.id) LIMIT 5

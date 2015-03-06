@@ -124,12 +124,11 @@ personbirthdate      string ,
   LOCATION '${hiveconf:MY.HDFS.DIR}/hana_customer/';
 
 DROP TABLE IF EXISTS cust;
-
 CREATE TABLE IF NOT EXISTS cust (
        parent_id string, 
        customer_number bigint,
        lead_id string,
-       lead_number bigint,
+       lead_record_number bigint,
        type string,
        bronze boolean,
        create_date date,
@@ -188,6 +187,199 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
   STORED AS TEXTFILE
   LOCATION '${hiveconf:MY.HDFS.DIR}/cust/';
 
+
+
+DROP TABLE IF EXISTS lead;
+CREATE TABLE IF NOT EXISTS lead(
+       parent_id string, 
+       customer_number bigint,
+       lead_id string,
+       lead_record_number bigint,
+       type string,
+       bronze boolean,
+       create_date date,
+       source string,
+       first_name string,
+       last_name string,
+       alias string,
+       salutation string,
+       gender string,
+       language string,
+       occupation string,
+       contactable boolean,
+       phone string,
+       secondary_phone string,
+       phone_opt_in_flag boolean,
+       email string,
+       secondary_email string,
+       email_opt_in_flag boolean,
+       postcode string,
+       street string,
+       city string,
+       state string,
+       country_code string,
+       country_description string,
+       mail_opt_in_flag boolean,
+       date_of_birth date,
+       company string,
+       membership string,
+       account_isactive boolean,
+       address_modified_date date,
+       address_type string,
+       age_range string,
+       data_compliance string,
+       data_quality_score int,
+       department string,
+       diplomatic_status string,
+       division string,
+       e_relationship_created_by string,
+       email_indicator string,
+       marketing_inactive boolean,
+       annual_revenue string,
+       convertedrccountid string,
+       convertedcontactid string,
+       converteddate date,
+       isconverted boolean,
+       facebook_id string,
+       lead_prize string,
+       lead_status string,
+       x3rd_party_data string,
+       data_policy boolean,
+       createdbyid string,
+       createddate date,
+       lastmodifiedbyid string
+       ) 
+       ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION '${hiveconf:MY.HDFS.DIR}/lead/';
+       
+DROP TABLE IF EXISTS cust_lead_inter;       
+CREATE TABLE IF NOT EXISTS cust_lead_inter (
+       parent_id string, 
+       customer_number bigint,
+       lead_id string,
+       lead_record_number bigint,
+       bronze boolean,
+       create_date date,
+       source string,
+       first_name string,
+       last_name string,
+       alias string,
+       salutation string,
+       gender string,
+       language string,
+       occupation string,
+       contactable boolean,
+       phone string,
+       secondary_phone string,
+       phone_opt_in_flag boolean,
+       email string,
+       secondary_email string,
+       email_opt_in_flag boolean,
+       postcode string,
+       street string,
+       city string,
+       state string,
+       country_code string,
+       country_description string,
+       mail_opt_in_flag boolean,
+       date_of_birth date,
+       company string,
+       membership string,
+       account_isactive boolean,
+       address_modified_date date,
+       address_type string,
+       age_range string,
+       data_compliance string,
+       data_quality_score int,
+       department string,
+       diplomatic_status string,
+       division string,
+       e_relationship_created_by string,
+       email_indicator string,
+       marketing_inactive boolean,
+       annual_revenue string,
+       convertedrccountid string,
+       convertedcontactid string,
+       converteddate date,
+       isconverted boolean,
+       facebook_id string,
+       lead_prize string,
+       lead_status string,
+       x3rd_party_data string,
+       data_policy boolean,
+       createdbyid string,
+       createddate date,
+       lastmodifiedbyid string
+       ) 
+       ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION '${hiveconf:MY.HDFS.DIR}/cust_lead_inter/';
+  
+DROP TABLE IF EXISTS cust_lead;
+CREATE TABLE IF NOT EXISTS cust_lead (
+       parent_id string, 
+       customer_number bigint,
+       lead_id string,
+       lead_record_number bigint,
+       bronze boolean,
+       create_date date,
+       source string,
+       first_name string,
+       last_name string,
+       alias string,
+       salutation string,
+       gender string,
+       language string,
+       occupation string,
+       contactable boolean,
+       phone string,
+       secondary_phone string,
+       phone_opt_in_flag boolean,
+       email string,
+       secondary_email string,
+       email_opt_in_flag boolean,
+       postcode string,
+       street string,
+       city string,
+       state string,
+       country_code string,
+       country_description string,
+       mail_opt_in_flag boolean,
+       date_of_birth date,
+       company string,
+       membership string,
+       account_isactive boolean,
+       address_modified_date date,
+       address_type string,
+       age_range string,
+       data_compliance string,
+       data_quality_score int,
+       department string,
+       diplomatic_status string,
+       division string,
+       e_relationship_created_by string,
+       email_indicator string,
+       marketing_inactive boolean,
+       annual_revenue string,
+       convertedrccountid string,
+       convertedcontactid string,
+       converteddate date,
+       isconverted boolean,
+       facebook_id string,
+       lead_prize string,
+       lead_status string,
+       x3rd_party_data string,
+       data_policy boolean,
+       createdbyid string,
+       createddate date,
+       lastmodifiedbyid string
+       ) 
+       ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+  STORED AS TEXTFILE
+  LOCATION '${hiveconf:MY.HDFS.DIR}/cust_lead/';
+        
+       
 DROP TABLE IF EXISTS hana_user;
 
 CREATE TABLE IF NOT EXISTS hana_user (
@@ -223,3 +415,15 @@ CREATE TABLE IF NOT EXISTS hana_user (
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
   STORED AS TEXTFILE
   LOCATION '${hiveconf:MY.HDFS.DIR}/hana_user/';
+  
+DROP TABLE IF EXISTS bronze;
+CREATE TABLE IF NOT EXISTS bronze(
+    parent_sf_id string,
+	child_sf_id	string,
+	parent_customer_no	bigint,
+	child_customer_no bigint
+) 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '${hiveconf:MY.HDFS.DIR}/bronze/';
+  
