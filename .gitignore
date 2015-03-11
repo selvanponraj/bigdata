@@ -1,7 +1,5 @@
 .settings/
 target/
-/**/target
-HiveCustomerTest/.classpath
 .project
 .classpath
 pom.xml.tag
